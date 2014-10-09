@@ -2,6 +2,8 @@ package main
 
 import "fmt"
 
+// RandomBits generates random bits and returns a channel that can be used
+// to read the random bits from.
 func RandomBits() <-chan int {
 	ch := make(chan int)
 	go func() {
@@ -16,6 +18,10 @@ func RandomBits() <-chan int {
 }
 
 func main() {
+	// Be aware that this function will never end because both communications are
+	// ready at all times and the select will pseudorandomly select either one of
+	// them. Therefore, there is no termination condition for range to cause the
+	// loop to exit.
 	for k := range RandomBits() {
 		fmt.Println(k)
 	}
