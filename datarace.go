@@ -59,7 +59,9 @@ func sharingViaChannelsIsCaring() {
 // race contains a race condition where two goroutines are competing for access
 // to a shared variable.
 func race() {
+	// This is just a channel to signal the main thread to exit.
 	wait := make(chan struct{})
+
 	n := 0
 	go func() {
 		n++ // one access: read, increment, write
@@ -74,4 +76,5 @@ func race() {
 func main() {
 	race()
 	sharingViaChannelsIsCaring()
+	lockItUp()
 }
