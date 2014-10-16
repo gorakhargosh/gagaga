@@ -46,8 +46,9 @@ func filterPrimes(cin chan int) chan int {
 }
 
 func main() {
-	n := 10000
-	fmt.Printf("Fibonacci primes until %v dumped.\n", n)
+	n := 10
+	fmt.Printf("Fibonacci primes until %v fibonacci numbers dumped.\n", n)
+	fmt.Println(isPrime(2), isPrime(201), isPrime(131), isPrime(4))
 	for x := range filterPrimes(fibonacci(n)) {
 		fmt.Println(x)
 	}
