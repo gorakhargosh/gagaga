@@ -16,6 +16,8 @@ func boring(msg string, quit chan bool) chan string {
 				// do nothing
 			case <-quit:
 				// Exit function.
+				// do some clean up here.
+				quit <- true
 				return
 			}
 			time.Sleep(duration)
@@ -33,4 +35,5 @@ func main() {
 		fmt.Println(<-c)
 	}
 	quit <- true
+	<-quit
 }
