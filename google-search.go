@@ -59,6 +59,7 @@ func Google2(query string) (results []Result) {
 
 func Google2P1(query string) (results []Result) {
 	c := make(chan Result)
+	numbackends := 3
 	go func() {
 		c <- Web1(query)
 	}()
@@ -70,7 +71,7 @@ func Google2P1(query string) (results []Result) {
 	}()
 
 	timeout := time.After(80 * time.Millisecond)
-	for i := 0; i < 3; i++ {
+	for i := 0; i < numbackends; i++ {
 		select {
 		case result := <-c:
 			results = append(results, result)
