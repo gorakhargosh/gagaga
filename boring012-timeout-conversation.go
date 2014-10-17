@@ -21,13 +21,14 @@ func boring(msg string) chan string {
 func main() {
 	c := boring("joe")
 	rand.Seed(time.Now().UTC().UnixNano())
+	timeout := time.After(5 * time.Second)
 	for {
 		select {
 		case s := <-c:
 			fmt.Println(s)
 		// Per communication timeout.
-		case <-time.After(800 * time.Millisecond):
-			fmt.Println("Communication too slow.")
+		case <-timeout:
+			fmt.Println("Conversation timed out.")
 			return
 		}
 	}
