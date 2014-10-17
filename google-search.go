@@ -20,10 +20,13 @@ func searchEngine(kind string) Search {
 var (
 	Web1   = searchEngine("web1")
 	Web2   = searchEngine("web2")
+	Web3   = searchEngine("web3")
 	Image1 = searchEngine("image1")
 	Image2 = searchEngine("image2")
+	Image3 = searchEngine("image3")
 	Video1 = searchEngine("video1")
 	Video2 = searchEngine("video2")
+	Video3 = searchEngine("video3")
 )
 
 type GoogleFunc func(query string) (results []Result)
@@ -82,13 +85,13 @@ func Google2P1(query string) (results []Result) {
 func Google3(query string) (results []Result) {
 	c := make(chan Result)
 	go func() {
-		c <- First(query, Web1, Web2)
+		c <- First(query, Web1, Web2, Web3)
 	}()
 	go func() {
-		c <- First(query, Image1, Image2)
+		c <- First(query, Image1, Image2, Image3)
 	}()
 	go func() {
-		c <- First(query, Video1, Video2)
+		c <- First(query, Video1, Video2, Video3)
 	}()
 
 	timeout := time.After(80 * time.Millisecond)
@@ -103,6 +106,7 @@ func Google3(query string) (results []Result) {
 	}
 	return
 }
+
 func First(query string, replicas ...Search) Result {
 	c := make(chan Result)
 	searchReplica := func(i int) { c <- replicas[i](query) }
