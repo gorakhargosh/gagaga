@@ -27,6 +27,8 @@ func main() {
 
 	// Grab the ball off the table; game ends.
 	<-table
+
+	panic("show me the stacks")
 }
 
 func player(name string, table chan *Ball) {
