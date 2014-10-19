@@ -19,6 +19,7 @@ func main() {
 	go player("pong", table)
 
 	// Toss the ball onto the table; game on.
+	// If we don't toss it here, we'll deadlock.
 	table <- new(Ball)
 
 	// Players can play only for a total of 1 second.
