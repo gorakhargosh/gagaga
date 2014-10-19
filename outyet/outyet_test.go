@@ -13,7 +13,18 @@ func TestIntegration(t *testing.T) {
 	ts := httptest.NewServer(&status)
 	defer ts.Close()
 
+	sleep := make(chan bool)
+	pollSleep = func(time.Duration) {
+		sleep <- true
+		sleep <- true
+	}
+	done := make(chan bool)
+	pollDone = func() {
+		done <- true
+	}
+
 	s := NewServer("1.x", ts.URL, 1*time.Millisecond)
+	<-sleep
 	r, _ := http.NewRequest("GET", "/", nil)
 	w := httptest.NewRecorder()
 	s.ServeHTTP(w, r)
@@ -22,7 +33,8 @@ func TestIntegration(t *testing.T) {
 	}
 
 	status = 200
-	time.Sleep(20 * time.Millisecond)
+	<-sleep
+	<-done
 	w = httptest.NewRecorder()
 	s.ServeHTTP(w, r)
 	if b := w.Body.String(); !strings.Contains(b, "YES!") {

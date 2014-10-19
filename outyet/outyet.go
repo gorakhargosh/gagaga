@@ -41,13 +41,17 @@ func NewServer(version, url string, period time.Duration) *Server {
 	return s
 }
 
+var pollSleep = time.Sleep
+var pollDone = func() {}
+
 func (s *Server) poll() {
 	for !isTagged(s.url) {
-		time.Sleep(s.period)
+		pollSleep(s.period)
 	}
 	s.mu.Lock()
 	s.yes = true
 	s.mu.Unlock()
+	pollDone()
 }
 
 func isTagged(url string) bool {
