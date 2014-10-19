@@ -6,7 +6,9 @@ import (
 	"time"
 )
 
-type Ball struct{ hits int }
+type Ball struct {
+	hits int
+}
 
 func main() {
 	rand.Seed(time.Now().UTC().UnixNano())
