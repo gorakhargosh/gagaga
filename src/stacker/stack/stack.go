@@ -9,12 +9,24 @@ func (s Stack) Len() int {
 }
 
 func (s *Stack) Push(x interface{}) {
-	*stack = append(*stack, x)
+	*s = append(*s, x)
 }
 
 func (s Stack) Top() (interface{}, error) {
-	if len(stack) == 0 {
+	if len(s) == 0 {
 		return nil, errors.New("can't Top() an empty stack")
 	}
-	return stack[len(stack)-1], nil
+	return s[len(s)-1], nil
+}
+
+func (s *Stack) Pop() (interface{}, error) {
+
+	stack := *s
+	if len(stack) == 0 {
+		return nil, errors.New("can't Pop() an empty stack.")
+	}
+
+	x := stack[len(stack)-1]
+	*s = stack[:len(stack)-1]
+	return x, nil
 }
