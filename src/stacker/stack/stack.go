@@ -20,7 +20,6 @@ func (s Stack) Top() (interface{}, error) {
 }
 
 func (s *Stack) Pop() (interface{}, error) {
-
 	stack := *s
 	if len(stack) == 0 {
 		return nil, errors.New("can't Pop() an empty stack.")
