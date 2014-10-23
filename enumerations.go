@@ -6,6 +6,12 @@ import (
 )
 
 const (
+	FlagZero = 0
+	FlagOne  = 4
+	FlagTwo
+)
+
+const (
 	Cyan = iota
 	Yellow
 	Magenta = 40
@@ -36,5 +42,6 @@ func main() {
 	fmt.Println(
 		StatusOn, StatusOff, StatusInactive, StatusFound,
 		StatusNotFound, StatusAccessDenied)
+	fmt.Println(FlagZero, FlagOne, FlagTwo)
 	fmt.Println(math.Pi)
 }
